@@ -1,3 +1,17 @@
+# NetBeans specific #
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Package Files #
+*.war
+*.ear
+
+
 # Compiled class file
 *.class
 
@@ -11,7 +25,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
@@ -22,3 +35,37 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Ant project
+*.el
+*.ipr
+*.iws
+*.pif
+*.snap
+.ant.properties
+.classpath
+.DS_Store
+.project
+.settings
+bin
+apache-ant-1.*
+bootstrap
+build
+dist
+distribution
+java-repository
+patch.tar.gz
+patch.txt
+target
+velocity.log*
+lib/optional/*.jar
+src/tests/antunit/core/output
+.idea
+*.iml
+/src/GPATH
+/src/GRTAGS
+/src/GSYMS
+/src/GTAGS
+/log.xml
+lib/optional/license.txt
+/release/distrib/
