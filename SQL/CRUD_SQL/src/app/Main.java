@@ -4,6 +4,9 @@
  */
 package app;
 
+import javax.swing.JFrame;
+import views.DataViewer;
+
 /**
  *
  * @author Vespertino
@@ -14,7 +17,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        JFrame mainView = new DataViewer();
+        mainView.setVisible(true);
     }
     
 }
