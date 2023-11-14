@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interfaces de desarrollo DAM</title>
+    <meta name="author">
+    <link id="theme" rel="stylesheet" href="assets/themes/dark.css">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/dependencies/IMAGG/IMAGG.css">
+    <script type="text/javascript" src="assets/main.js"></script>
+</head>
+<body>
+    <nav>
+        <div>
+            <div>
+                <a class="invert" href="https://discord.com/invite/VEZWVWFNy" target="_blank" title="Servidor de discord" ><img height="24px" src="assets/img/discord.png"></a>
+                <a class="invert" href="https://github.com/manuelmsni/JavaParaNewbies" target="_blank" title="Repositorio de github"><img height="24px" src="assets/img/github.png"></a>
+            </div>
+            <label class="switch">
+                <input id="themeSwitch" type="checkbox" onchange="switchTheme()">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        
+    </nav>
+
+    <header class="mainContainer tac">
+        <h1><i>Acceso a datos</i></h1>
+    </header>
+
+    <section class="mainContainer pd2">
+        <h2>mySQL</h2>
+        <!-- docker commit -->
+        <article> <!-- SQL en docker -->
+            <h3>Conexión a la base de datos <a class="show-SQLdocker" onclick="showHide('SQLdocker','show-SQLdocker')" title="Mostrar SQLdocker">🔳▼</a></h3>
+            <div class="SQLdocker hidden">
+                <h4>Clase Connection</h4>
+                <p>Envuelve la conexión a la base de datos para poder controlarla mejor y asegurarnos de que solo hay una instancia al mismo tiempo.</p>
+                <div class="code">
+                    <pre class="copy">
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBConection {
+    
+    static String bdUrl = Constants.DBURL;
+    static Connection con;
+    
+    public static Connection getConection(){
+        try {
+            con = DriverManager.getConnection(bdUrl);
+            System.out.println("Connected!");
+            return con;
+        } catch (SQLException ex) {
+            if (ex.getSQLState().equals("XJ004")) {
+                createDatabase();
+                return getConnection();
+            } else {
+                ex.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private static String chooseDatabaseLocation() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choose Database Location");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Derby Database Files (*.derby)", "derby"));
+
+        int userSelection = fileChooser.showSaveDialog(null);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            return "jdbc:derby:" + fileChooser.getSelectedFile().getAbsolutePath() + ";create=true";
+        }
+        return null;
+    }
+
+    private static void createDatabase(String dbUrl) {
+        try (Connection connection = DriverManager.getConnection(dbUrl);
+             Statement statement = connection.createStatement()) {
+            // Agrega aquí el código para crear las tablas si es necesario
+            System.out.println("Database created successfully");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void close(){
+        if(con == null) return;
+        try {
+            con.close();
+            con = null;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+}</pre>
+                </div>
+                <p class="cierre">Ocultar mySQL en Docker <a onclick="showHide('show-SQLdocker','SQLdocker')" title="Ocultar SQLdocker">🔲▲</a></p>
+            </div>
+        </article>
+    </section>
+
+    <footer>
+
+    </footer>
+    <script>
+        initCopia();
+    </script>
+    <script src="https://manuelmsni.github.io/IMAGG/IMAGG_1.0/js/IMAGG.js"></script>
+</body>
+</html>

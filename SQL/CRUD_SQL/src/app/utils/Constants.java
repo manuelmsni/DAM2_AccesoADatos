@@ -10,5 +10,6 @@ package app.utils;
  */
 public class Constants {
     public static String DatabaseLocation = "Databases";
+    static String DBURL;
     
 }

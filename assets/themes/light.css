@@ -1,0 +1,13 @@
+:root{
+
+    --main-bg: rgb(223 220 210);
+    --secondary-bg: #fffff5;
+
+    --main-color: #5d5d5d;
+    --secondary-color: #3c3c3c;
+
+}
+
+.invert{
+    filter: invert(0.7);
+}

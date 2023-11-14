@@ -4,9 +4,9 @@
  */
 package app;
 
-import javax.swing.JFrame;
+import app.controllers.DataWiewController;
+import app.models.EventManager;
 import views.DataViewer;
-
 /**
  *
  * @author Vespertino
@@ -17,8 +17,10 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        JFrame mainView = new DataViewer();
-        mainView.setVisible(true);
+        EventManager model = new EventManager();
+        DataViewer view = new DataViewer();
+        DataWiewController controller = new DataWiewController(view, model);
+        view.setVisible(true);
     }
     
 }

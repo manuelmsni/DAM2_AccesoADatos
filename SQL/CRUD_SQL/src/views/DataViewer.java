@@ -3,23 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package views;
-
-import app.models.Event;
-import app.models.EventManager;
-import app.models.User;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
@@ -27,148 +17,47 @@ import javax.swing.JTextField;
  * @author manuelmsni
  */
 public class DataViewer extends javax.swing.JFrame {
-
-    private EventManager events;
-
+    
     private Map<String, JTextField> fields;
-    private int selectedEventRow;
-    private Event selectedEvent;
+    
+    public DataViewer() {
+        this.fields = new HashMap();
+        initComponents();
+    }
 
-    private int selectedUserRow;
-    private User selectedUser;
-
-    private String selectedRowId;
-
-    private MouseAdapter clickEventsTable = new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            selectedEventRow = table.getSelectedRow();
-            selectedRowId = (String) events.getValueAt(selectedEventRow, 0);
-            selectedEvent = events.getEventById(selectedRowId);
-            buttonSelectedMode();
-            loadEventData();
-            if (e.getClickCount() == 2) {
-                loadUsersTable(selectedEvent);
-            }
-        }
-    };
-
-    private MouseAdapter clickUsersTable = new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            selectedUserRow = table.getSelectedRow();
-            selectedRowId = (String) selectedEvent.getValueAt(selectedEventRow, 0);
-            selectedUser = selectedEvent.getUserById(selectedRowId);
-            buttonSelectedMode();
-            loadUserData();
-        }
-    };
-    
-    private ActionListener saveEvent = (ActionEvent e) -> {
-            String name = fields.get("nombre").getText();
-            String fecha = fields.get("fecha").getText();
-            if (!(name.isBlank() || fecha.isBlank())) {
-                try {
-                    LocalDate date = LocalDate.parse(fecha);
-                    Event temp = new Event(name, date);
-                    temp.setId(UUID.randomUUID().toString());
-                    events.addEvent(temp);
-                    buttonNewMode();
-                    repaint();
-                } catch (DateTimeParseException ex) {
-                    ex.printStackTrace();
-                }
-            }
-    };
-    
-    private ActionListener saveUser = (ActionEvent e) -> {
-        String name = fields.get("nombre").getText();
-        String surname = fields.get("apellido").getText();
-        if (!(name.isBlank() || surname.isBlank())) {
-            User temp = new User(name, surname);
-            temp.setId(UUID.randomUUID().toString());
-            selectedEvent.addUser(temp);
-            buttonNewMode();
-            repaint();
-        }
-    };
-    
-    private ActionListener editEvent = (ActionEvent e) -> {
-        if(selectedEvent != null){
-            String name = fields.get("nombre").getText();
-            String fecha = fields.get("fecha").getText();
-            if (!(name.isBlank() || fecha.isBlank())) {
-                try {
-                    LocalDate date = LocalDate.parse(fecha);
-                    selectedEvent.setName(name);
-                    selectedEvent.setDate(date);
-                    events.fireTableDataChanged();
-                    buttonNewMode();
-                    repaint();
-                } catch (DateTimeParseException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
-    };
-    
-    private ActionListener editUser = (ActionEvent e) -> {
-        if(selectedUser != null){
-            String name = fields.get("nombre").getText();
-            String surname = fields.get("apellido").getText();
-            if (!(name.isBlank() || surname.isBlank())) {
-                selectedUser.setName(name);
-                selectedUser.setSurname(surname);
-                selectedEvent.fireTableDataChanged();
-                buttonNewMode();
-                repaint();
-            }
-        }
-    };
-    
-    private ActionListener deleteEvent = (ActionEvent e) -> {
-        if(selectedEvent != null){
-            events.removeEvent(selectedEvent);
-            buttonNewMode();
-            repaint();
-        }
-    };
-    
-    private ActionListener deleteUser = (ActionEvent e) -> {
-        if(selectedUser != null){
-            selectedEvent.removeUser(selectedUser);
-            buttonNewMode();
-            repaint();
-        }
-    };
-    
-    private void buttonSelectedMode(){
-        setButtonState(false, true, true, true, false);
-        setFieldsEnabled(false);
+    public JTable getTable() {
+        return table;
     }
     
-    private void buttonNewMode(){
-        setButtonState(true, false, false, false, false);
-        setFieldsEnabled(true);
-        for(JTextField tf: fields.values()){
-            tf.setText("");
-        }
+    public Map<String, JTextField> getFields() {
+        return fields;
     }
-    
-    private void buttonEditMode(){
-        setButtonState(false, false, false, true, true);
-        setFieldsEnabled(true);
+
+    public JButton getBtnAñadir() {
+        return btnAñadir;
     }
-    
-    private void setButtonState(boolean btnAdd, boolean btnNew, boolean btnEdit, boolean btnDelete, boolean btnSave) {
-        btnAñadir.setEnabled(btnAdd);
-        btnNuevo.setEnabled(btnNew);
-        btnEditar.setEnabled(btnEdit);
-        btnBorrar.setEnabled(btnDelete);
-        btnGuardar.setEnabled(btnSave);
+
+    public JButton getBtnBorrar() {
+        return btnBorrar;
     }
-    
-    private void setFieldsEnabled(boolean enabled) {
+
+    public JButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    public JButton getBtnGuardar() {
+        return btnGuardar;
+    }
+
+    public JButton getBtnNuevo() {
+        return btnNuevo;
+    }
+
+    public JPanel getInputContainer() {
+        return inputContainer;
+    }
+
+    public void setFieldsEnabled(boolean enabled) {
         for(JTextField tf: fields.values()){
             if(!tf.equals(fields.get("id"))){
                 tf.setEnabled(enabled);
@@ -176,53 +65,6 @@ public class DataViewer extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * Creates new form DataViewer
-     */
-    public DataViewer() {
-        initComponents();
-        initCustom();
-        loadTestData();
-    }
-    
-    private void loadTestData(){
-        Event temp = new Event("sedfg", LocalDate.parse("1997-12-04"));
-        temp.setId(UUID.randomUUID().toString());
-        User u = new User("awf","awf");
-        u.setId(UUID.randomUUID().toString());
-        temp.addUser(u);
-        u = new User("rqae","afh");
-        u.setId(UUID.randomUUID().toString());
-        temp.addUser(u);
-        events.addEvent(temp);
-        temp = new Event("awf", LocalDate.parse("1621-02-02"));
-        temp.setId(UUID.randomUUID().toString());
-        events.addEvent(temp);
-    }
-
-    private void initCustom() {
-        events = new EventManager();
-        table.setModel(events);
-        loadEventsTable(events);
-        btnNuevo.addActionListener((ActionEvent e) -> {
-            buttonNewMode();
-        });
-        btnEditar.addActionListener((ActionEvent e) -> {
-            buttonEditMode();
-        });
-    }
-
-    private void removeMouseListeners() {
-        table.removeMouseListener(clickEventsTable);
-        table.removeMouseListener(clickUsersTable);
-        btnAñadir.removeActionListener(saveEvent);
-        btnAñadir.removeActionListener(saveUser);
-        btnBorrar.removeActionListener(deleteEvent);
-        btnBorrar.removeActionListener(deleteUser);
-        btnGuardar.removeActionListener(editEvent);
-        btnGuardar.removeActionListener(editUser);
-    }
-    
     private JTextField createField(String text) {
         JPanel inputs = new JPanel();
         inputs.setLayout(new GridLayout(1, 4));
@@ -235,75 +77,32 @@ public class DataViewer extends javax.swing.JFrame {
         fields.put(text, output);
         return output;
     }
+    
+    public void printInputs(Map<String, JTextField> fields){
+        System.out.println("\n");
+        for(String field: fields.keySet()){
+            System.out.println(field);
+        }
+    }
 
-    private void initEventsInputs() {
+    public void initEventsInputs() {
         inputContainer.removeAll();
-        fields = new HashMap();
         createField("id").setEnabled(false);
         createField("nombre");
         createField("fecha");
     }
-    
-    private void loadEventsTable(EventManager em) {
-        setTitle("Lista de eventos");
-        removeMouseListeners();
-        initEventsInputs();
-        table.setModel(em);
-        table.addMouseListener(clickEventsTable);
-        buttonNewMode();
-        btnAñadir.addActionListener(saveEvent);
-        btnBorrar.addActionListener(deleteEvent);
-        btnGuardar.addActionListener(editEvent);
-        repaint();
-    }
 
-    private void loadEventData() {
-        fields.get("id").setText(selectedEvent.getId());
-        fields.get("nombre").setText(selectedEvent.getName());
-        fields.get("fecha").setText(selectedEvent.getDate().toString());
-    }
-
-    private void initUserInputs() {
+    public void initUserInputs() {
         inputContainer.removeAll();
-        fields = new HashMap();
         createField("id").setEnabled(false);
         createField("nombre");
         createField("apellido");
     }
-
-    private void loadUsersTable(Event e) {
-        setTitle("Evento: " + selectedEvent.getName() + " (Lista de eventos)");
-        removeMouseListeners();
-        initUserInputs();
-        table.setModel(e);
-        table.addMouseListener(clickUsersTable);
-        buttonNewMode();
-        btnAñadir.addActionListener(saveUser);
-        btnBorrar.addActionListener(deleteUser);
-        btnGuardar.addActionListener(editUser);
-        initGoBack();
-        repaint();
-    }
     
-    private void initGoBack(){
-        JPanel inputs = new JPanel();
-        inputs.setLayout(new GridLayout(1, 4));
-        inputContainer.add(inputs);
-        inputs.add(new JPanel());
-        inputs.add(new JPanel());
-        JButton goBack = new JButton("Volver");
-        goBack.addActionListener((ActionEvent ev) -> {
-            loadEventsTable(events);
-        });
-        inputs.add(goBack);
-        inputs.add(new JPanel());
+    public void resetFields(){
+        fields = new HashMap();
     }
 
-    private void loadUserData() {
-        fields.get("id").setText(selectedUser.getId());
-        fields.get("nombre").setText(selectedUser.getName());
-        fields.get("apellido").setText(selectedUser.getSurname());
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -425,4 +224,5 @@ public class DataViewer extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
+
 }
