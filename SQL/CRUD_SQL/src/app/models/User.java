@@ -30,8 +30,21 @@ public class User {
     }
     
     public User(String name, String surname){
-        id = UUID.randomUUID().toString();
         this.name = name;
         this.surname = surname;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+    
+    
 }

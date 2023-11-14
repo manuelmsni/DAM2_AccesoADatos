@@ -1,0 +1,20 @@
+-d
+D:\\Proyectos\\2ºDam\\DAM2_AccesoADatos\\SQL\\CRUD_SQL\\build\\classes
+-classpath
+"D:\\Proyectos\\2ºDam\\DAM2_AccesoADatos\\SQL\\CRUD_SQL\\build\\classes;C:\\Program Files\\NetBeans-19\\netbeans\\java\\modules\\ext\\AbsoluteLayout.jar"
+-sourcepath
+D:\\Proyectos\\2ºDam\\DAM2_AccesoADatos\\SQL\\CRUD_SQL\\build\\empty
+-target
+20
+-encoding
+ISO-8859-1
+-g
+-processorpath
+"C:\\Program Files\\NetBeans-19\\netbeans\\java\\modules\\ext\\AbsoluteLayout.jar;D:\\Proyectos\\2ºDam\\DAM2_AccesoADatos\\SQL\\CRUD_SQL\\build\\empty"
+-s
+D:\\Proyectos\\2ºDam\\DAM2_AccesoADatos\\SQL\\CRUD_SQL\\build\\generated-sources\\ap-source-output
+-source
+20
+D:\\Proyectos\\2ºDam\\DAM2_AccesoADatos\\SQL\\CRUD_SQL\\src\\app\\models\\Event.java
+D:\\Proyectos\\2ºDam\\DAM2_AccesoADatos\\SQL\\CRUD_SQL\\src\\app\\models\\EventManager.java
+D:\\Proyectos\\2ºDam\\DAM2_AccesoADatos\\SQL\\CRUD_SQL\\src\\views\\DataViewer.java

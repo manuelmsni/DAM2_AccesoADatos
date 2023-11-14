@@ -30,6 +30,13 @@ public class Event extends AbstractTableModel{
         this.id = id;
     }
     
+    public User getUserById(String id){
+        for(User user: users){
+            if(user.getId() == id) return user;
+        }
+        return null;
+    }
+    
     public boolean addUser(User u){
         if(u == null) return false;
         if(!users.contains(u)){
@@ -43,6 +50,7 @@ public class Event extends AbstractTableModel{
     public boolean removeUser(User u){
         if(u == null) return false;
         if(users.remove(u)){
+            fireTableDataChanged();
             return true;
         }
         return false;
@@ -62,7 +70,7 @@ public class Event extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         User u = users.get(rowIndex);
         return switch (columnIndex) {
-            case 0 -> users.indexOf(u);
+            case 0 -> u.getId();
             case 1 -> u.getName();
             case 2 -> u.getSurname();
             default -> null;
@@ -85,4 +93,14 @@ public class Event extends AbstractTableModel{
     public LocalDate getDate() {
         return date;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+    
+    
 }

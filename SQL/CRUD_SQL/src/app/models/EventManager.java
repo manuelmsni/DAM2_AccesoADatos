@@ -20,6 +20,13 @@ public class EventManager extends AbstractTableModel{
         events = new ArrayList();
     }
     
+    public Event getEventById(String id){
+        for(Event event: events){
+            if(event.getId() == id) return event;
+        }
+        return null;
+    }
+    
     public boolean addEvent(Event e){
         if(e == null) return false;
         if(!events.contains(e)){
@@ -33,13 +40,10 @@ public class EventManager extends AbstractTableModel{
     public boolean removeEvent(Event e){
         if(e == null) return false;
         if(events.remove(e)){
+            fireTableDataChanged();
             return true;
         }
         return false;
-    }
-    
-    public int getPublicId(Event e){
-        return events.indexOf(e);
     }
 
     @Override
@@ -56,7 +60,7 @@ public class EventManager extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         Event e = events.get(rowIndex);
         return switch (columnIndex) {
-            case 0 -> getPublicId(e);
+            case 0 -> e.getId();
             case 1 -> e.getName();
             case 2 -> e.getDate();
             default -> null;
