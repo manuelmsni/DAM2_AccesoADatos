@@ -118,7 +118,7 @@ public class DataViewer extends javax.swing.JFrame {
             String surname = fields.get("apellido").getText();
             if (!(name.isBlank() || surname.isBlank())) {
                 selectedUser.setName(name);
-                selectedUser.setSurname(name);
+                selectedUser.setSurname(surname);
                 selectedEvent.fireTableDataChanged();
                 buttonNewMode();
                 repaint();
@@ -143,39 +143,35 @@ public class DataViewer extends javax.swing.JFrame {
     };
     
     private void buttonSelectedMode(){
-        btnAñadir.setEnabled(false);
-        btnNuevo.setEnabled(true);
-        btnEditar.setEnabled(true);
-        btnBorrar.setEnabled(true);
-        btnGuardar.setEnabled(false);
-        for(JTextField tf: fields.values()){
-            tf.setEnabled(false);
-        }
+        setButtonState(false, true, true, true, false);
+        setFieldsEnabled(false);
     }
     
     private void buttonNewMode(){
-        btnAñadir.setEnabled(true);
-        btnNuevo.setEnabled(false);
-        btnEditar.setEnabled(false);
-        btnGuardar.setEnabled(false);
-        btnBorrar.setEnabled(false);
+        setButtonState(true, false, false, false, false);
+        setFieldsEnabled(true);
         for(JTextField tf: fields.values()){
             tf.setText("");
-            if(!tf.equals(fields.get("id"))){
-                tf.setEnabled(true);
-            }
         }
     }
     
     private void buttonEditMode(){
-        btnAñadir.setEnabled(false);
-        btnNuevo.setEnabled(false);
-        btnEditar.setEnabled(false);
-        btnGuardar.setEnabled(true);
-        btnBorrar.setEnabled(false);
+        setButtonState(false, false, false, true, true);
+        setFieldsEnabled(true);
+    }
+    
+    private void setButtonState(boolean btnAdd, boolean btnNew, boolean btnEdit, boolean btnDelete, boolean btnSave) {
+        btnAñadir.setEnabled(btnAdd);
+        btnNuevo.setEnabled(btnNew);
+        btnEditar.setEnabled(btnEdit);
+        btnBorrar.setEnabled(btnDelete);
+        btnGuardar.setEnabled(btnSave);
+    }
+    
+    private void setFieldsEnabled(boolean enabled) {
         for(JTextField tf: fields.values()){
             if(!tf.equals(fields.get("id"))){
-                tf.setEnabled(true);
+                tf.setEnabled(enabled);
             }
         }
     }
