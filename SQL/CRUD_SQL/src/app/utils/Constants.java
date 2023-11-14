@@ -9,7 +9,6 @@ package app.utils;
  * @author Vespertino
  */
 public class Constants {
-    public static String DatabaseLocation = "Databases";
-    static String DBURL;
+    public static String DBURL = "Databases";
     
 }

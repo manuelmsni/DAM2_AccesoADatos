@@ -8,44 +8,50 @@ package app.utils;
  *
  * @author Vespertino
  */
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JFileChooser;
 import java.sql.Statement;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JOptionPane;
 
 public class DBConection {
     
     static String bdUrl = Constants.DBURL;
     static Connection con;
     
+    private static boolean checkDatabaseExists(){
+        File dbFile = new File(Constants.DBURL);
+        if (dbFile.exists()) {
+            System.out.println("Database file exists.");
+            return true;
+        } else {
+            System.out.println("Database file does not exist. It may not have been created.");
+            String bdUrl = chooseDatabaseLocation() + File.separator + "Database";
+            if (bdUrl != null) {
+                createDatabase(bdUrl);
+                System.out.println("Created database!");
+            } else {
+                System.out.println("Database connection canceled by the user.");
+                System.exit(1);
+            }
+        }
+        return false;
+    }
+    
     public static Connection getConnection() {
+        checkDatabaseExists();
         try {
             if (con == null || con.isClosed()) {
-                String bdUrl = "jdbc:derby:" + Constants.DBURL;
-                try {
-                    con = DriverManager.getConnection(bdUrl);
-                    System.out.println("Connected!");
-                } catch (SQLException ex) {
-                    // Si la base de datos no existe, solicitar la ubicación
-                    if (ex.getSQLState().equals("XJ004")) {
-                        String newDbUrl = chooseDatabaseLocation();
-                        if (newDbUrl != null) {
-                            createDatabase(newDbUrl);
-                            con = DriverManager.getConnection(newDbUrl);
-                            System.out.println("Connected!");
-                        } else {
-                            System.out.println("Database connection canceled by the user.");
-                        }
-                    } else {
-                        ex.printStackTrace();
-                    }
-                }
+                String bdUrl = "jdbc:sqlite:" + Constants.DBURL;
+                con = DriverManager.getConnection(bdUrl);
+                System.out.println("Connected to the file!");
             }
             return con;
         } catch (SQLException ex) {
             ex.printStackTrace();
+            System.exit(2);
         }
         return null;
     }
@@ -53,11 +59,25 @@ public class DBConection {
     private static String chooseDatabaseLocation() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choose Database Location");
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Derby Database Files (*.derby)", "derby"));
+
+        // Configura el modo de selección para directorios
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
         int userSelection = fileChooser.showSaveDialog(null);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            return "jdbc:derby:" + fileChooser.getSelectedFile().getAbsolutePath() + ";create=true";
+            File selectedDirectory = fileChooser.getSelectedFile();
+
+            // Verifica si el usuario seleccionó un directorio
+            if (selectedDirectory.isDirectory()) {
+                // Devuelve la ruta del directorio seleccionado
+                return "jdbc:sqlite:" + selectedDirectory.getAbsolutePath() + File.separator + "your_database_name.db";
+            } else {
+                // Muestra un mensaje de error si no se seleccionó un directorio
+                JOptionPane.showMessageDialog(null, "Please select a valid directory.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+            // El usuario ha cancelado la operación
+            System.exit(3);
         }
         return null;
     }
