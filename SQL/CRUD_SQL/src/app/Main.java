@@ -7,6 +7,7 @@ package app;
 import app.controllers.DataWiewController;
 import app.models.EventManager;
 import app.utils.DBConection;
+import app.utils.PropertyManager;
 import views.DataViewer;
 import java.sql.Connection;
 /**
@@ -18,7 +19,20 @@ public class Main {
     /**
      * @param args the command line arguments
      */
+    private static PropertyManager properties;
+
+    public static PropertyManager getProperties() {
+        return properties;
+    }
+    
     public static void main(String[] args) {
+        
+        properties = new PropertyManager();
+        
+        // Establecer una propiedad
+        properties.setProperty("dbURL", "Databases/d");
+        
+        //String valor = prop.getProperty("databaseURL");
         
         DBConection dbConnection = new DBConection();
         

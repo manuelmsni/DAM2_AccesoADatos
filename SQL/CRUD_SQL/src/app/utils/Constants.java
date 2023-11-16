@@ -9,6 +9,8 @@ package app.utils;
  * @author Vespertino
  */
 public class Constants {
-    public static String DBURL = "Databases";
+    
+    public static String PROPERTYFILE = "Properties.config";
+    public static String DATABASENAME = "Databases";
     
 }
