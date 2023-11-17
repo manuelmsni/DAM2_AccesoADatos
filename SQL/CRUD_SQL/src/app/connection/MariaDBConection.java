@@ -12,93 +12,57 @@ import app.Main;
 import app.models.Event;
 import app.models.User;
 import app.utils.PropertyManager;
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import javax.swing.JFileChooser;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.sql.SQLNonTransientConnectionException;
+import java.sql.SQLSyntaxErrorException;
 
-public class SQLiteDBConection {
+public class MariaDBConection {
     
     private static PropertyManager properties = Main.getProperties();
-    private static String prefix = "jdbc:sqlite:";
-    private static String dbLocation = properties.getProperty("dbLocation");
-    private static String dbName = properties.getProperty("dbName");
+    private static String prefix = "jdbc:mariadb:";
+    private static String dbLocation = "//localhost:3306/";
+    private static String dbName = "program";
     private static Connection con;
     
     private static String getDBPATH(){
-        return prefix + dbLocation + File.separator + dbName;
+        return prefix + dbLocation  + dbName;
     }
     
     public static Connection getConnection() {
-        if(!checkDatabaseExists()){
-            setNewDatabaseLocation();
-            if(!createDatabase(getDBPATH())) return null;
-        }
-        
         try {
             if (con == null || con.isClosed()) {
-                con = DriverManager.getConnection(getDBPATH());
+                con = DriverManager.getConnection(getDBPATH(), "root", "docker");
                 System.out.println("Connected to the file!");
             }
             return con;
+        } catch (SQLNonTransientConnectionException ntce) { // No existe la conexión
+            ntce.printStackTrace();
+            
+
+        } catch (SQLSyntaxErrorException synte) { // No existe la base de datos
+            synte.printStackTrace();
+            
+            createDatabase();
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
+            
+
         }
+        
+        //DatabaseMetaData dbmd = con.getMetaData();
         return null;
     }
-
-    private static boolean checkDatabaseExists(){
-        
-        File dbFile = new File(dbLocation + File.separator + dbName);
-        
-        if (dbFile.exists()) return true;
-
-        return false;
-    }
     
-    private static boolean setNewDatabaseLocation(){
-        
-        dbLocation = chooseDirectory("Elige la ubicación para crear la base de datos:");
-        
-        if(dbLocation == null || dbLocation.isBlank()){
-            System.out.println("Database file does not exist. It may not have been created.");
-            return false;
-        }
-        
-        properties.setProperty("dbLocation", dbLocation);
-        
-        return true;
-    }
-    
-    private static String chooseDirectory(String messaje) {
-        JFileChooser fileChooser = new JFileChooser();
-        
-        String currentDirectory = System.getProperty("user.dir");
-        fileChooser.setCurrentDirectory(new File(currentDirectory));
-        
-        fileChooser.setDialogTitle(messaje);
-        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-        int userSelection = fileChooser.showSaveDialog(null);
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File selectedDirectory = fileChooser.getSelectedFile();
-
-            if (selectedDirectory.isDirectory()) {
-                return selectedDirectory.getAbsolutePath();
-            }
-        }
-        return null;
-    }
-
-    private static boolean createDatabase(String dbUrl) {
-        
+    private static boolean createDatabase() {
         try {
-            con = DriverManager.getConnection(dbUrl);
+            con = DriverManager.getConnection(getDBPATH());
            
             Statement statement = con.createStatement();
 

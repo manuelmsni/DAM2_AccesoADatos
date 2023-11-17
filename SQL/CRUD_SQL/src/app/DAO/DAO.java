@@ -8,8 +8,13 @@ package app.DAO;
  *
  * @author manuelmsni
  */
+
+import java.sql.Connection;
+
 public interface DAO<T> {
     public boolean addObject(T object);
     public boolean updateObject(T object);
     public boolean deleteObject(String id);
+    public Connection connect();
+    public void disconnect();
 }

@@ -4,11 +4,12 @@
  */
 package app.DAO;
 
+import app.connection.MariaDBConection;
 import app.connection.SQLiteDBConection;
 import app.models.Event;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Connection;
 
 /**
  *
@@ -21,7 +22,7 @@ public class EventDAO implements DAO<Event>{
 
             // Utiliza una sentencia preparada para evitar problemas de seguridad con la entrada del usuario
             String insertEventoQuery = "INSERT INTO Evento (UUID, Nombre, Fecha) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = SQLiteDBConection.getConnection().prepareStatement(insertEventoQuery);
+            PreparedStatement preparedStatement = connect().prepareStatement(insertEventoQuery);
 
             // Establecer los valores de los parámetros
             preparedStatement.setString(1, evento.getId());
@@ -33,7 +34,7 @@ public class EventDAO implements DAO<Event>{
 
             System.out.println("Evento insertado correctamente");
 
-            SQLiteDBConection.close();
+            disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,7 +46,7 @@ public class EventDAO implements DAO<Event>{
         try {
             // Utiliza una sentencia preparada para evitar problemas de seguridad con la entrada del usuario
             String updateEventoQuery = "UPDATE Evento SET Nombre=?, Fecha=? WHERE UUID=?";
-            PreparedStatement preparedStatement = SQLiteDBConection.getConnection().prepareStatement(updateEventoQuery);
+            PreparedStatement preparedStatement = connect().prepareStatement(updateEventoQuery);
 
             // Establecer los valores de los parámetros
             preparedStatement.setString(1, evento.getName());
@@ -57,7 +58,7 @@ public class EventDAO implements DAO<Event>{
 
             if (rowsUpdated > 0) {
                 System.out.println("Evento actualizado correctamente");
-                SQLiteDBConection.close();
+                disconnect();
                 return true;
             } else {
                 System.out.println("No se encontró el evento con UUID: " + evento.getId());
@@ -73,7 +74,7 @@ public class EventDAO implements DAO<Event>{
 
             // Utiliza una sentencia preparada para evitar problemas de seguridad con la entrada del usuario
             String deleteEventoQuery = "DELETE FROM Evento WHERE UUID=?";
-            PreparedStatement preparedStatement = SQLiteDBConection.getConnection().prepareStatement(deleteEventoQuery);
+            PreparedStatement preparedStatement = connect().prepareStatement(deleteEventoQuery);
 
             // Establecer el valor del parámetro
             preparedStatement.setString(1, eventId);
@@ -83,7 +84,7 @@ public class EventDAO implements DAO<Event>{
 
             if (rowsDeleted > 0) {
                 System.out.println("Evento eliminado correctamente");
-                SQLiteDBConection.close();
+                disconnect();
                 return true;
             } else {
                 System.out.println("No se encontró el evento con UUID: " + eventId);
@@ -92,6 +93,16 @@ public class EventDAO implements DAO<Event>{
             e.printStackTrace();
         }
         return false;
+    }
+
+    public Connection connect() {
+        return MariaDBConection.getConnection();
+        //return SQLiteDBConection.getConnection();
+    }
+
+    public void disconnect() {
+        MariaDBConection.close();
+        //SQLiteDBConection.close();
     }
     
 }

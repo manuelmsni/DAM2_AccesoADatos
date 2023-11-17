@@ -4,12 +4,14 @@
  */
 package app;
 
+import app.connection.MariaDBConection;
+import app.connection.SQLiteDBConection;
 import app.controllers.DataWiewController;
 import app.models.EventManager;
-import app.connection.SQLiteDBConection;
+import app.models.Event;
 import app.utils.PropertyManager;
 import views.DataViewer;
-import java.sql.Connection;
+import java.util.List;
 /**
  *
  * @author Vespertino
@@ -29,14 +31,18 @@ public class Main {
         
         properties = new PropertyManager();
         
-        SQLiteDBConection dbConnection = new SQLiteDBConection();
+        MariaDBConection dbConnection = new MariaDBConection();
+        List<Event> eventos = MariaDBConection.getEventos(); 
+        //SQLiteDBConection dbConnection = new SQLiteDBConection();
+        //List<Event> eventos = SQLiteDBConection.getEventos(); 
         
-        EventManager model = new EventManager(SQLiteDBConection.getEventos());
+        EventManager model = new EventManager(eventos);
         DataViewer view = new DataViewer();
         DataWiewController controller = new DataWiewController(view, model);
         view.setVisible(true);
         
         dbConnection.close();
+        //SQLiteDBConection.close();
     }
     
 }
