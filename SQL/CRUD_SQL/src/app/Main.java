@@ -6,7 +6,7 @@ package app;
 
 import app.controllers.DataWiewController;
 import app.models.EventManager;
-import app.utils.DBConection;
+import app.connection.SQLiteDBConection;
 import app.utils.PropertyManager;
 import views.DataViewer;
 import java.sql.Connection;
@@ -29,16 +29,9 @@ public class Main {
         
         properties = new PropertyManager();
         
-        // Establecer una propiedad
-        properties.setProperty("dbURL", "Databases/d");
+        SQLiteDBConection dbConnection = new SQLiteDBConection();
         
-        //String valor = prop.getProperty("databaseURL");
-        
-        DBConection dbConnection = new DBConection();
-        
-        Connection con = dbConnection.getConnection();
-        
-        EventManager model = new EventManager();
+        EventManager model = new EventManager(SQLiteDBConection.getEventos());
         DataViewer view = new DataViewer();
         DataWiewController controller = new DataWiewController(view, model);
         view.setVisible(true);

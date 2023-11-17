@@ -4,9 +4,12 @@
  */
 package app.controllers;
 
+import app.DAO.EventDAO;
+import app.DAO.UserDAO;
 import app.models.Event;
 import app.models.EventManager;
 import app.models.User;
+import app.connection.SQLiteDBConection;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +30,9 @@ import views.DataViewer;
  * @author Vespertino
  */
 public class DataWiewController {
+    
+    private EventDAO eventDAO;
+    private UserDAO userDAO;
     
     private DataViewer view;
     private EventManager model;
@@ -83,6 +89,11 @@ public class DataWiewController {
                     LocalDate date = LocalDate.parse(fecha);
                     Event temp = new Event(name, date);
                     temp.setId(UUID.randomUUID().toString());
+                    
+                    if(!eventDAO.addObject(temp)){
+                        return;
+                    };
+                    
                     model.addEvent(temp);
                     buttonNewMode();
                 } catch (DateTimeParseException ex) {
@@ -97,6 +108,8 @@ public class DataWiewController {
         if (!(name.isBlank() || surname.isBlank())) {
             User temp = new User(name, surname);
             temp.setId(UUID.randomUUID().toString());
+            temp.setEventId(selectedEvent.getId());
+            if(!userDAO.addObject(temp))return;
             selectedEvent.addUser(temp);
             buttonNewMode();
         }
@@ -109,8 +122,15 @@ public class DataWiewController {
             if (!(name.isBlank() || fecha.isBlank())) {
                 try {
                     LocalDate date = LocalDate.parse(fecha);
+                    String bufferName = selectedEvent.getName();
+                    LocalDate bufferFecha = selectedEvent.getDate();
                     selectedEvent.setName(name);
                     selectedEvent.setDate(date);
+                    if(!eventDAO.updateObject(selectedEvent)){
+                        selectedEvent.setName(bufferName);
+                        selectedEvent.setDate(bufferFecha);
+                        return;
+                    };
                     model.fireTableDataChanged();
                     buttonNewMode();
                 } catch (DateTimeParseException ex) {
@@ -125,8 +145,15 @@ public class DataWiewController {
             String name = fields.get("nombre").getText();
             String surname = fields.get("apellido").getText();
             if (!(name.isBlank() || surname.isBlank())) {
+                String bufferName = selectedUser.getName();
+                String bufferSurname = selectedUser.getSurname();
                 selectedUser.setName(name);
                 selectedUser.setSurname(surname);
+                if(!userDAO.updateObject(selectedUser)){
+                        selectedUser.setName(bufferName);
+                        selectedUser.setSurname(bufferSurname);
+                        return;
+                };
                 selectedEvent.fireTableDataChanged();
                 buttonNewMode();
             }
@@ -135,6 +162,9 @@ public class DataWiewController {
     
     private ActionListener deleteEvent = (ActionEvent e) -> {
         if(selectedEvent != null){
+            if(!eventDAO.deleteObject(selectedEvent.getId())){
+                return;
+            };
             model.removeEvent(selectedEvent);
             buttonNewMode();
         }
@@ -142,6 +172,9 @@ public class DataWiewController {
     
     private ActionListener deleteUser = (ActionEvent e) -> {
         if(selectedUser != null){
+            if(!userDAO.deleteObject(selectedUser.getId())){
+                return;
+            };
             selectedEvent.removeUser(selectedUser);
             buttonNewMode();
         }
@@ -149,9 +182,11 @@ public class DataWiewController {
     
     public DataWiewController(DataViewer view, EventManager model){
         this.model = model;
-        loadTestData();
         
         this.view = view;
+        
+        eventDAO = new EventDAO();
+        userDAO = new UserDAO();
         
         this.fields = view.getFields();
         view.printInputs(this.fields);
@@ -200,21 +235,6 @@ public class DataWiewController {
         btnEditar.setEnabled(btnEdit);
         btnBorrar.setEnabled(btnDelete);
         btnGuardar.setEnabled(btnSave);
-    }
-    
-    private void loadTestData(){
-        Event temp = new Event("Concierto", LocalDate.parse("1997-12-04"));
-        temp.setId(UUID.randomUUID().toString());
-        User u = new User("Pepe","Martín");
-        u.setId(UUID.randomUUID().toString());
-        temp.addUser(u);
-        u = new User("Jose","María");
-        u.setId(UUID.randomUUID().toString());
-        temp.addUser(u);
-        model.addEvent(temp);
-        temp = new Event("Fiestas del pueblo", LocalDate.parse("1621-02-02"));
-        temp.setId(UUID.randomUUID().toString());
-        model.addEvent(temp);
     }
     
     private void loadEventsTable(EventManager em) {

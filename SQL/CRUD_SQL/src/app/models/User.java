@@ -13,12 +13,17 @@ import java.util.UUID;
  */
 public class User {
     
+    private String eventId;
     private String id;
     private String name;
     private String surname;
 
     public String getId() {
         return id;
+    }
+    
+    public String getEventId() {
+        return eventId;
     }
 
     public String getName() {
@@ -32,6 +37,10 @@ public class User {
     public User(String name, String surname){
         this.name = name;
         this.surname = surname;
+    }
+    
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
     public void setId(String id) {

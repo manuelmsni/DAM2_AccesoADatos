@@ -4,6 +4,8 @@
  */
 package app.utils;
 
+import java.io.File;
+
 /**
  *
  * @author Vespertino
@@ -11,6 +13,5 @@ package app.utils;
 public class Constants {
     
     public static String PROPERTYFILE = "Properties.config";
-    public static String DATABASENAME = "Databases";
     
 }

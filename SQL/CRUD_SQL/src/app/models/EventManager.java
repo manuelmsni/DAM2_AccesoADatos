@@ -16,6 +16,10 @@ public class EventManager extends AbstractTableModel{
     private final String[] COLUMNNAMES = {"Id", "Nombre", "Fecha"};
     private List<Event> events;
     
+    public EventManager(List<Event> events){
+        this.events = events;
+    }
+    
     public EventManager(){
         events = new ArrayList();
     }
