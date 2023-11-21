@@ -10,7 +10,7 @@ import app.controllers.DataWiewController;
 import app.models.EventManager;
 import app.models.Event;
 import app.utils.PropertyManager;
-import views.DataViewer;
+import app.views.DataViewer;
 import java.util.List;
 /**
  *
@@ -31,18 +31,20 @@ public class Main {
         
         properties = new PropertyManager();
         
-        MariaDBConection dbConnection = new MariaDBConection();
-        List<Event> eventos = MariaDBConection.getEventos(); 
-        //SQLiteDBConection dbConnection = new SQLiteDBConection();
-        //List<Event> eventos = SQLiteDBConection.getEventos(); 
+        
+        
+        //MariaDBConection dbConnection = new MariaDBConection();
+        //List<Event> eventos = MariaDBConection.getEventos(); 
+        SQLiteDBConection dbConnection = new SQLiteDBConection();
+        List<Event> eventos = SQLiteDBConection.getEventos(); 
         
         EventManager model = new EventManager(eventos);
         DataViewer view = new DataViewer();
         DataWiewController controller = new DataWiewController(view, model);
         view.setVisible(true);
         
-        dbConnection.close();
-        //SQLiteDBConection.close();
+        //MariaDBConection.close();
+        SQLiteDBConection.close();
     }
     
 }

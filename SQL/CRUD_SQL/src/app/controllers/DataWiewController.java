@@ -10,6 +10,7 @@ import app.models.Event;
 import app.models.EventManager;
 import app.models.User;
 import app.connection.SQLiteDBConection;
+import app.models.JTextFieldWithPlaceHolder;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import views.DataViewer;
+import app.views.DataViewer;
 
 /**
  *
@@ -92,7 +93,7 @@ public class DataWiewController {
                     
                     if(!eventDAO.addObject(temp)){
                         return;
-                    };
+                    }
                     
                     model.addEvent(temp);
                     buttonNewMode();
@@ -130,7 +131,7 @@ public class DataWiewController {
                         selectedEvent.setName(bufferName);
                         selectedEvent.setDate(bufferFecha);
                         return;
-                    };
+                    }
                     model.fireTableDataChanged();
                     buttonNewMode();
                 } catch (DateTimeParseException ex) {
@@ -153,7 +154,7 @@ public class DataWiewController {
                         selectedUser.setName(bufferName);
                         selectedUser.setSurname(bufferSurname);
                         return;
-                };
+                }
                 selectedEvent.fireTableDataChanged();
                 buttonNewMode();
             }
@@ -164,7 +165,7 @@ public class DataWiewController {
         if(selectedEvent != null){
             if(!eventDAO.deleteObject(selectedEvent.getId())){
                 return;
-            };
+            }
             model.removeEvent(selectedEvent);
             buttonNewMode();
         }
@@ -174,7 +175,7 @@ public class DataWiewController {
         if(selectedUser != null){
             if(!userDAO.deleteObject(selectedUser.getId())){
                 return;
-            };
+            }
             selectedEvent.removeUser(selectedUser);
             buttonNewMode();
         }
@@ -220,7 +221,11 @@ public class DataWiewController {
         setButtonState(true, false, false, false, false);
         view.setFieldsEnabled(true);
         for(JTextField tf: fields.values()){
-            tf.setText("");
+            if(tf instanceof JTextFieldWithPlaceHolder){
+                ((JTextFieldWithPlaceHolder) tf).setPlaceHolder();
+            } else {
+                tf.setText("");
+            }
         }
     }
     

@@ -96,13 +96,13 @@ public class EventDAO implements DAO<Event>{
     }
 
     public Connection connect() {
-        return MariaDBConection.getConnection();
-        //return SQLiteDBConection.getConnection();
+        //return MariaDBConection.getConnection();
+        return SQLiteDBConection.getConnection();
     }
 
     public void disconnect() {
-        MariaDBConection.close();
-        //SQLiteDBConection.close();
+        //MariaDBConection.close();
+        SQLiteDBConection.close();
     }
     
 }

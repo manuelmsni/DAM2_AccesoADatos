@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package views;
+package app.views;
+import app.models.JTextFieldWithPlaceHolder;
 import java.awt.GridLayout;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,13 +66,15 @@ public class DataViewer extends javax.swing.JFrame {
         }
     }
 
-    private JTextField createField(String text) {
+    private JTextField createField(String text, String placeholder) {
         JPanel inputs = new JPanel();
         inputs.setLayout(new GridLayout(1, 4));
         inputContainer.add(inputs);
         inputs.add(new JPanel());
         inputs.add(new JLabel(text + ":"));
-        JTextField output = new JTextField();
+        JTextField output;
+        if(placeholder.isBlank()) output = new JTextField();
+        else output = new JTextFieldWithPlaceHolder(placeholder);
         inputs.add(output);
         inputs.add(new JPanel());
         fields.put(text, output);
@@ -87,16 +90,16 @@ public class DataViewer extends javax.swing.JFrame {
 
     public void initEventsInputs() {
         inputContainer.removeAll();
-        createField("id").setEnabled(false);
-        createField("nombre");
-        createField("fecha");
+        createField("id","").setEnabled(false);
+        createField("nombre","");
+        createField("fecha","(yyyy-mm-dd)");
     }
 
     public void initUserInputs() {
         inputContainer.removeAll();
-        createField("id").setEnabled(false);
-        createField("nombre");
-        createField("apellido");
+        createField("id","").setEnabled(false);
+        createField("nombre","");
+        createField("apellido","");
     }
     
     public void resetFields(){
