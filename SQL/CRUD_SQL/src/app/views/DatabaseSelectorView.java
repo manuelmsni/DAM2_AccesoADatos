@@ -9,12 +9,28 @@ package app.views;
  * @author Vespertino
  */
 public class DatabaseSelectorView extends javax.swing.JFrame {
+    
+    public static final int CANCELLED = 0;
+    public static final int SQLITE = 1;
+    public static final int MARIADB = 2;
+    
+    private int selected;
 
     /**
      * Creates new form DatabaseSelectorView
      */
     public DatabaseSelectorView() {
         initComponents();
+        initCustom();
+    }
+    
+    private void initCustom() {
+        selected = 0;
+    }
+    
+    public int getSelectedOption(){
+        setVisible(true);
+        return selected;
     }
 
     /**
@@ -42,15 +58,33 @@ public class DatabaseSelectorView extends javax.swing.JFrame {
         getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);
 
         jButton1.setText("MariaDB");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1);
 
         jButton2.setText("SQLite");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        selected = MARIADB;
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        selected = SQLITE;
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -94,4 +128,5 @@ public class DatabaseSelectorView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
+
 }

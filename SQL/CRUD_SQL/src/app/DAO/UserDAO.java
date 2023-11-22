@@ -4,10 +4,10 @@
  */
 package app.DAO;
 
+import app.Main;
+import app.connection.DBConection;
 import app.connection.MariaDBConection;
 import app.connection.SQLiteDBConection;
-import static app.connection.SQLiteDBConection.close;
-import static app.connection.SQLiteDBConection.getConnection;
 import app.models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,13 +16,20 @@ import java.sql.SQLException;
  *
  * @author manuelmsni
  */
-public class UserDAO {
+public class UserDAO implements DAO<User>{
+    
+    DBConection conManager;
+    
+    public UserDAO(){
+        this.conManager = Main.getConManager();
+    }
+    
     public boolean addObject(User usuario) {
         try {
 
             // Utiliza una sentencia preparada para evitar problemas de seguridad con la entrada del usuario
             String insertUsuarioQuery = "INSERT INTO Usuario (UUID_Usuario, UUID_Evento, Nombre, Apellido) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connect().prepareStatement(insertUsuarioQuery);
+            PreparedStatement preparedStatement = conManager.getConnection().prepareStatement(insertUsuarioQuery);
 
             // Establecer los valores de los parámetros
             preparedStatement.setString(1, usuario.getId());
@@ -35,7 +42,7 @@ public class UserDAO {
 
             System.out.println("Usuario insertado correctamente");
 
-            disconnect();
+            conManager.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,7 +54,7 @@ public class UserDAO {
 
             // Utiliza una sentencia preparada para evitar problemas de seguridad con la entrada del usuario
             String updateUsuarioQuery = "UPDATE Usuario SET Nombre=?, Apellido=? WHERE UUID_Usuario=?";
-            PreparedStatement preparedStatement = connect().prepareStatement(updateUsuarioQuery);
+            PreparedStatement preparedStatement = conManager.getConnection().prepareStatement(updateUsuarioQuery);
 
             // Establecer los valores de los parámetros
             preparedStatement.setString(1, usuario.getName());
@@ -63,7 +70,7 @@ public class UserDAO {
                 return false;
             }
 
-            disconnect();
+            conManager.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,7 +83,7 @@ public class UserDAO {
 
             // Utiliza una sentencia preparada para evitar problemas de seguridad con la entrada del usuario
             String deleteUsuarioQuery = "DELETE FROM Usuario WHERE UUID_Usuario=?";
-            PreparedStatement preparedStatement = connect().prepareStatement(deleteUsuarioQuery);
+            PreparedStatement preparedStatement = conManager.getConnection().prepareStatement(deleteUsuarioQuery);
 
             // Establecer el valor del parámetro
             preparedStatement.setString(1, uuidUsuario);
@@ -90,7 +97,7 @@ public class UserDAO {
                 System.out.println("No se encontró el usuario con UUID: " + uuidUsuario);
             }
 
-            disconnect();
+            conManager.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,13 +105,4 @@ public class UserDAO {
         return false;
     }
     
-    public Connection connect() {
-        //return MariaDBConection.getConnection();
-        return SQLiteDBConection.getConnection();
-    }
-
-    public void disconnect() {
-        //MariaDBConection.close();
-        SQLiteDBConection.close();
-    }
 }
