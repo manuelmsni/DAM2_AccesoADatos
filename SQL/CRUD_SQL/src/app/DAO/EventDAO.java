@@ -9,9 +9,14 @@ import app.connection.DBConection;
 import app.connection.MariaDBConection;
 import app.connection.SQLiteDBConection;
 import app.models.Event;
+import app.models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
@@ -101,5 +106,43 @@ public class EventDAO implements DAO<Event>{
             e.printStackTrace();
         }
         return false;
+    }
+    
+    public ArrayList<Event> getAll(Object parent) {
+        ArrayList<Event> eventos = new ArrayList<>();
+
+        try {
+            Connection con = conManager.getConnection();
+            Statement statement = con.createStatement();
+
+            String selectEventosQuery = "SELECT * FROM Evento";
+            ResultSet eventosResult = statement.executeQuery(selectEventosQuery);
+            
+            while (eventosResult.next()) {
+                Event evento = new Event(eventosResult.getString("Nombre"), LocalDate.parse(eventosResult.getString("Fecha")));
+                evento.setId(eventosResult.getString("UUID"));
+
+                eventos.add(evento);
+            }
+            
+            for(Event evento: eventos){
+                // Obtener usuarios para este evento
+                String selectUsuariosQuery = "SELECT * FROM Usuario WHERE UUID_Evento = '" + evento.getId() + "'";
+                ResultSet usuariosResult = statement.executeQuery(selectUsuariosQuery);
+
+                while (usuariosResult.next()) {
+                    User usuario = new User(usuariosResult.getString("Nombre"), usuariosResult.getString("Apellido"));
+                    usuario.setId(usuariosResult.getString("UUID_Usuario"));
+                    evento.addUser(usuario);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            conManager.close();
+        }
+
+        return eventos;
     }
 }

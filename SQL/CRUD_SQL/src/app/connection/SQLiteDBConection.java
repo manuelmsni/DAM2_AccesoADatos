@@ -28,36 +28,21 @@ import java.time.LocalDate;
 
 public class SQLiteDBConection extends DBConection{
     
-    protected PropertyManager properties;
-    protected static String prefix;
-    protected static String dbLocation;
-    protected static String dbName;
-    protected static Connection con;
-    
     public SQLiteDBConection(String prefix, String dbLocation, String dbName){
-        this.prefix = prefix;
-        this.dbLocation = dbLocation;
-        this.dbName = dbName;
-        
-        properties = Main.getProperties();
+        super(prefix, dbLocation, dbName);
     }
     
-    private String getDBPATH(){
-        return prefix + dbLocation + dbName;
-    }
+
     
     public Connection getConnection() {
         if(!checkDatabaseExists()){
             if(!setNewDatabaseLocation()) return null;
-              
             if(!createDatabase()) return null;
         }
         
         try {
-            if (con == null || con.isClosed()) {
-                con = DriverManager.getConnection(getDBPATH());
-                System.out.println("Connected to the file!");
-            }
+            con = DriverManager.getConnection(getDBPATH());
+            System.out.println("Connected to the file!");
             return con;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -72,7 +57,6 @@ public class SQLiteDBConection extends DBConection{
     }
     
     private boolean setNewDatabaseLocation(){
-        
         dbLocation = chooseDirectory("Elige la ubicación para crear la base de datos:");
         if(dbLocation == null || dbLocation.isBlank()){
             System.out.println("Database file does not exist. It may not have been created.");
@@ -132,43 +116,6 @@ public class SQLiteDBConection extends DBConection{
             e.printStackTrace();
         }
         return false;
-    }
-    
-        public ArrayList<Event> getEventos() {
-        ArrayList<Event> eventos = new ArrayList<>();
-
-        try (Connection connection = getConnection();
-                
-            Statement statement = connection.createStatement()) {
-
-            String selectEventosQuery = "SELECT * FROM Evento";
-            ResultSet eventosResult = statement.executeQuery(selectEventosQuery);
-            
-            while (eventosResult.next()) {
-                Event evento = new Event(eventosResult.getString("Nombre"), LocalDate.parse(eventosResult.getString("Fecha")));
-                evento.setId(eventosResult.getString("UUID"));
-
-                eventos.add(evento);
-            }
-            
-            for(Event evento: eventos){
-                // Obtener usuarios para este evento
-                String selectUsuariosQuery = "SELECT * FROM Usuario WHERE UUID_Evento = '" + evento.getId() + "'";
-                ResultSet usuariosResult = statement.executeQuery(selectUsuariosQuery);
-
-                while (usuariosResult.next()) {
-                    User usuario = new User(usuariosResult.getString("Nombre"), usuariosResult.getString("Apellido"));
-                    usuario.setId(usuariosResult.getString("UUID_Usuario"));
-                    evento.addUser(usuario);
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        close();
-        return eventos;
     }
     
     public void close(){

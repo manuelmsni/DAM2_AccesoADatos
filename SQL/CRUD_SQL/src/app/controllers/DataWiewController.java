@@ -6,6 +6,7 @@ package app.controllers;
 
 import app.DAO.EventDAO;
 import app.DAO.UserDAO;
+import app.Main;
 import app.models.Event;
 import app.models.EventManager;
 import app.models.User;
@@ -186,8 +187,8 @@ public class DataWiewController {
         
         this.view = view;
         
-        eventDAO = new EventDAO();
-        userDAO = new UserDAO();
+        eventDAO = Main.getEventDao();
+        userDAO = Main.getUserDao();
         
         this.fields = view.getFields();
         view.printInputs(this.fields);

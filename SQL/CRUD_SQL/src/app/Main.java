@@ -4,6 +4,8 @@
  */
 package app;
 
+import app.DAO.EventDAO;
+import app.DAO.UserDAO;
 import app.connection.DBConection;
 import app.connection.MariaDBConection;
 import app.connection.SQLiteDBConection;
@@ -27,6 +29,10 @@ public class Main {
     private static PropertyManager properties;
     
     private static DBConection conManager;
+    
+    private static EventDAO eventDao;
+    
+    private static UserDAO userDao;
 
     public static PropertyManager getProperties() {
         return properties;
@@ -34,6 +40,14 @@ public class Main {
     
     public static DBConection getConManager(){
         return conManager;
+    }
+    
+    public static UserDAO getUserDao(){
+        return userDao;
+    }
+    
+    public static EventDAO getEventDao(){
+        return eventDao;
     }
     
     public static void main(String[] args) {
@@ -55,7 +69,10 @@ public class Main {
                 break;
         }
         
-        List<Event> eventos = conManager.getEventos();
+        userDao = new UserDAO();
+        eventDao = new EventDAO();
+        
+        List<Event> eventos = eventDao.getAll(null);
         
         EventManager model = new EventManager(eventos);
         DataViewer view = new DataViewer();

@@ -6,12 +6,14 @@ package app.DAO;
 
 import app.Main;
 import app.connection.DBConection;
-import app.connection.MariaDBConection;
-import app.connection.SQLiteDBConection;
+import app.models.Event;
 import app.models.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 /**
  *
  * @author manuelmsni
@@ -103,6 +105,35 @@ public class UserDAO implements DAO<User>{
             e.printStackTrace();
         }
         return false;
+    }
+    
+    public ArrayList<User> getAll(Object parent) {
+        if(parent == null) return null;
+        if(!(parent instanceof Event)) return null;
+        Event castedEvent = (Event) parent;
+        
+        ArrayList<User> users = new ArrayList<>();
+
+        try {
+            Connection con = conManager.getConnection();
+            Statement statement = con.createStatement();
+
+            // Obtener usuarios para este evento
+            String selectUsuariosQuery = "SELECT * FROM Usuario WHERE UUID_Evento = '" + castedEvent.getId() + "'";
+            ResultSet usuariosResult = statement.executeQuery(selectUsuariosQuery);
+
+            while (usuariosResult.next()) {
+                User usuario = new User(usuariosResult.getString("Nombre"), usuariosResult.getString("Apellido"));
+                usuario.setId(usuariosResult.getString("UUID_Usuario"));
+                users.add(usuario);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            conManager.close();
+        }
+        return users;
     }
     
 }
