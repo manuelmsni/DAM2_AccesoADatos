@@ -10,10 +10,11 @@ import app.connection.SQLiteDBConection;
 import app.controllers.DataWiewController;
 import app.models.EventManager;
 import app.models.Event;
+import app.utils.DatabaseSelector;
 import app.utils.PropertyManager;
 import app.views.DataViewer;
-import app.views.DatabaseSelectorView;
 import java.util.List;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Vespertino
@@ -41,20 +42,20 @@ public class Main {
         
         conManager = null;
         
-        DatabaseSelectorView dbsv = new DatabaseSelectorView();
-        switch(dbsv.getSelectedOption()){
-            case DatabaseSelectorView.SQLITE:
-                conManager = new SQLiteDBConection("jdbc:sqlite:", "dbLocation", "dbName");
+        DatabaseSelector dbsv = new DatabaseSelector();
+        switch(dbsv.getOption()){
+            case DatabaseSelector.SQLITE:
+                conManager = new SQLiteDBConection("jdbc:sqlite:", properties.getProperty("dbLocation"), properties.getProperty("dbName"));
                 break;
-            case DatabaseSelectorView.MARIADB:
+            case DatabaseSelector.MARIADB:
                 conManager = new MariaDBConection("jdbc:mariadb:", "//localhost:3306/", "program");
                 break;
-            case DatabaseSelectorView.CANCELLED:
+            case DatabaseSelector.CANCELLED:
                 System.exit(1);
                 break;
         }
         
-        List<Event> eventos = conManager.getEventos(); 
+        List<Event> eventos = conManager.getEventos();
         
         EventManager model = new EventManager(eventos);
         DataViewer view = new DataViewer();
@@ -64,4 +65,5 @@ public class Main {
         conManager.close();
     }
     
+
 }

@@ -1,0 +1,81 @@
+2023-11-23  5:49:53 0 [Note] Starting MariaDB 11.1.3-MariaDB source revision 0f5613a25f27b8034645226a48c2dc1aa4562281 as process 22068
+2023-11-23  5:49:54 0 [Note] InnoDB: The first data file './ibdata1' did not exist. A new tablespace will be created!
+2023-11-23  5:49:54 0 [Note] InnoDB: Compressed tables use zlib 1.3
+2023-11-23  5:49:54 0 [Note] InnoDB: Using transactional memory
+2023-11-23  5:49:54 0 [Note] InnoDB: Number of transaction pools: 1
+2023-11-23  5:49:54 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+2023-11-23  5:49:54 0 [Note] InnoDB: Initializing buffer pool, total size = 20.000MiB, chunk size = 1.000MiB
+2023-11-23  5:49:54 0 [Note] InnoDB: Completed initialization of buffer pool
+2023-11-23  5:49:54 0 [Note] InnoDB: Setting file './ibdata1' size to 12.000MiB. Physically writing the file full; Please wait ...
+2023-11-23  5:49:54 0 [Note] InnoDB: File './ibdata1' size is now 12.000MiB.
+2023-11-23  5:49:54 0 [Note] InnoDB: File system buffers for log disabled (block size=4096 bytes)
+2023-11-23  5:49:54 0 [Note] InnoDB: Data file .//undo001 did not exist: new to be created
+2023-11-23  5:49:54 0 [Note] InnoDB: Setting file .//undo001 size to 10.000MiB
+2023-11-23  5:49:54 0 [Note] InnoDB: Database physically writes the file full: wait...
+2023-11-23  5:49:54 0 [Note] InnoDB: Data file .//undo002 did not exist: new to be created
+2023-11-23  5:49:54 0 [Note] InnoDB: Setting file .//undo002 size to 10.000MiB
+2023-11-23  5:49:54 0 [Note] InnoDB: Database physically writes the file full: wait...
+2023-11-23  5:49:54 0 [Note] InnoDB: Data file .//undo003 did not exist: new to be created
+2023-11-23  5:49:54 0 [Note] InnoDB: Setting file .//undo003 size to 10.000MiB
+2023-11-23  5:49:54 0 [Note] InnoDB: Database physically writes the file full: wait...
+2023-11-23  5:49:54 0 [Note] InnoDB: Doublewrite buffer not found: creating new
+2023-11-23  5:49:54 0 [Note] InnoDB: Opened 3 undo tablespaces
+2023-11-23  5:49:54 0 [Note] InnoDB: 128 rollback segments in 3 undo tablespaces are active.
+2023-11-23  5:49:54 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+2023-11-23  5:49:54 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+2023-11-23  5:49:54 0 [Note] InnoDB: log sequence number 0; transaction id 3
+2023-11-23  5:49:54 0 [Note] Plugin 'FEEDBACK' is disabled.
+2023-11-23  5:49:54 0 [Note] mysqld.exe: SSPI: using principal name 'localhost', mech 'Negotiate'
+2023-11-23  5:50:40 0 [Note] Starting MariaDB 11.1.3-MariaDB source revision 0f5613a25f27b8034645226a48c2dc1aa4562281 as process 19612
+2023-11-23  5:50:40 0 [Note] InnoDB: Compressed tables use zlib 1.3
+2023-11-23  5:50:40 0 [Note] InnoDB: Using transactional memory
+2023-11-23  5:50:40 0 [Note] InnoDB: Number of transaction pools: 1
+2023-11-23  5:50:40 0 [Note] InnoDB: Using crc32 + pclmulqdq instructions
+2023-11-23  5:50:40 0 [Note] InnoDB: Initializing buffer pool, total size = 128.000MiB, chunk size = 2.000MiB
+2023-11-23  5:50:40 0 [Note] InnoDB: Completed initialization of buffer pool
+2023-11-23  5:50:40 0 [Note] InnoDB: File system buffers for log disabled (block size=4096 bytes)
+2023-11-23  5:50:40 0 [Note] InnoDB: End of log at LSN=47629
+2023-11-23  5:50:40 0 [Note] InnoDB: Opened 3 undo tablespaces
+2023-11-23  5:50:40 0 [Note] InnoDB: 128 rollback segments in 3 undo tablespaces are active.
+2023-11-23  5:50:40 0 [Note] InnoDB: Setting file './ibtmp1' size to 12.000MiB. Physically writing the file full; Please wait ...
+2023-11-23  5:50:40 0 [Note] InnoDB: File './ibtmp1' size is now 12.000MiB.
+2023-11-23  5:50:40 0 [Note] InnoDB: log sequence number 47629; transaction id 14
+2023-11-23  5:50:40 0 [Note] Plugin 'FEEDBACK' is disabled.
+2023-11-23  5:50:40 0 [Note] InnoDB: Loading buffer pool(s) from D:\Proyectos\2ºDam\DAM2_AccesoADatos\SQL\mariadb\databases\ib_buffer_pool
+2023-11-23  5:50:40 0 [Note] mysqld.exe: SSPI: using principal name 'localhost', mech 'Negotiate'
+2023-11-23  5:50:41 0 [Note] Server socket created on IP: '::'.
+2023-11-23  5:50:41 0 [Note] Server socket created on IP: '0.0.0.0'.
+2023-11-23  5:50:41 0 [Note] InnoDB: Buffer pool(s) load completed at 231123  5:50:41
+2023-11-23  5:50:41 0 [Note] mysqld.exe: Event Scheduler: Loaded 0 events
+2023-11-23  5:50:41 0 [Note] D:\Proyectos\2ºDam\DAM2_AccesoADatos\SQL\mariadb\bin\mysqld.exe: ready for connections.
+Version: '11.1.3-MariaDB'  socket: ''  port: 3306  mariadb.org binary distribution
+2023-11-23  5:52:34 4 [Warning] Aborted connection 4 to db: 'unconnected' user: 'manuelmsni' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  5:53:11 6 [Warning] Aborted connection 6 to db: 'unconnected' user: 'manuelmsni' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  5:53:43 8 [Warning] Aborted connection 8 to db: 'unconnected' user: 'manuelmsni' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  5:58:05 10 [Warning] Aborted connection 10 to db: 'unconnected' user: 'manuelmsni' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  5:58:05 11 [Warning] Aborted connection 11 to db: 'unconnected' user: 'manuelmsni' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:01:24 13 [Warning] Aborted connection 13 to db: 'unconnected' user: 'manuelmsni' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:01:48 14 [Warning] Access denied for user 'root'@'localhost' (using password: NO)
+2023-11-23  6:13:38 19 [Warning] Aborted connection 19 to db: 'unconnected' user: 'manuelmsni' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:13:39 18 [Warning] Aborted connection 18 to db: 'unconnected' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:15:06 23 [Warning] Aborted connection 23 to db: 'program' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:18:20 32 [Warning] Aborted connection 32 to db: 'unconnected' user: 'manuelmsni' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:18:21 31 [Warning] Aborted connection 31 to db: 'unconnected' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:19:15 36 [Warning] Aborted connection 36 to db: 'unconnected' user: 'manuelmsni' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:19:16 35 [Warning] Aborted connection 35 to db: 'unconnected' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:20:35 38 [Warning] Aborted connection 38 to db: 'unconnected' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:21:09 40 [Warning] Aborted connection 40 to db: 'unconnected' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:21:55 43 [Warning] Aborted connection 43 to db: 'unconnected' user: 'manuelmsni' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:21:56 42 [Warning] Aborted connection 42 to db: 'unconnected' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:24:34 45 [Warning] Aborted connection 45 to db: 'unconnected' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:26:46 47 [Warning] Aborted connection 47 to db: 'program' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:27:56 50 [Warning] Aborted connection 50 to db: 'unconnected' user: 'manuelmsni' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:27:57 49 [Warning] Aborted connection 49 to db: 'program' user: 'root' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:39:15 66 [Warning] Aborted connection 66 to db: 'unconnected' user: 'unauthenticated' host: 'localhost' (This connection closed normally without authentication)
+2023-11-23  6:39:16 67 [Warning] Aborted connection 67 to db: 'unconnected' user: 'unauthenticated' host: 'localhost' (This connection closed normally without authentication)
+2023-11-23  6:39:19 68 [Warning] Aborted connection 68 to db: 'unconnected' user: 'unauthenticated' host: 'localhost' (This connection closed normally without authentication)
+2023-11-23  6:39:29 70 [Warning] Aborted connection 70 to db: 'unconnected' user: 'unauthenticated' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:39:29 69 [Warning] Aborted connection 69 to db: 'unconnected' user: 'unauthenticated' host: 'localhost' (Got an error reading communication packets)
+2023-11-23  6:39:29 70 [Warning] Aborted connection 70 to db: 'unconnected' user: 'unauthenticated' host: 'localhost' (This connection closed normally without authentication)
+2023-11-23  6:39:29 69 [Warning] Aborted connection 69 to db: 'unconnected' user: 'unauthenticated' host: 'localhost' (This connection closed normally without authentication)
+2023-11-23  6:59:02 87 [Warning] Aborted connection 87 to db: 'unconnected' user: 'root' host: 'localhost' (Got an error reading communication packets)
