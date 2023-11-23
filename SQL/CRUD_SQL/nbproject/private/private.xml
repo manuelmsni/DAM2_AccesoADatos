@@ -3,20 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/Main.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/models/Event.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/DAO/EventDAO.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/DAO/DAO.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/connection/DBConection.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/models/EventManager.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/connection/MariaDBConection.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/DAO/UserDAO.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/models/User.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/connection/SQLiteDBConection.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/utils/PropertyManager.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/views/DatabaseSelectorView.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/controllers/DataWiewController.java</file>
-            <file>file:/D:/Proyectos/2ºDam/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/utils/Constants.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/models/Event.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/connection/SQLiteDBConection.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/DAO/EventDAO.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/models/JTextFieldWithPlaceHolder.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/DAO/DAO.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/utils/PropertyManager.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/Main.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/models/User.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/DAO/UserDAO.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/connection/DBConection.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/connection/MariaDBConection.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/utils/Constants.java</file>
+            <file>file:/E:/Manuel/2_dam/Acceso%20a%20datos/DAM2_AccesoADatos/SQL/CRUD_SQL/src/app/controllers/DataWiewController.java</file>
         </group>
     </open-files>
 </project-private>

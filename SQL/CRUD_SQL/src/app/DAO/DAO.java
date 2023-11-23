@@ -9,8 +9,6 @@ package app.DAO;
  * @author manuelmsni
  */
 
-import app.connection.DBConection;
-import java.sql.Connection;
 import java.util.List;
 
 public interface DAO<T> {
