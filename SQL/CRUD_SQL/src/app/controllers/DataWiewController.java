@@ -10,7 +10,6 @@ import app.Main;
 import app.models.Event;
 import app.models.EventManager;
 import app.models.User;
-import app.connection.SQLiteDBConection;
 import app.models.JTextFieldWithPlaceHolder;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;

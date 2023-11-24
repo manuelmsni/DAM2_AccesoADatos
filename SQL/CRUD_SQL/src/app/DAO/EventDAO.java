@@ -6,8 +6,6 @@ package app.DAO;
 
 import app.Main;
 import app.connection.DBConection;
-import app.connection.MariaDBConection;
-import app.connection.SQLiteDBConection;
 import app.models.Event;
 import app.models.User;
 import java.sql.Connection;

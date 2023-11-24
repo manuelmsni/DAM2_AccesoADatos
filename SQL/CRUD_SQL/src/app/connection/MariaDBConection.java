@@ -9,20 +9,13 @@ package app.connection;
  * @author Vespertino
  */
 
-import app.Main;
-import app.models.Event;
-import app.models.User;
-import app.utils.PropertyManager;
+
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLNonTransientConnectionException;
 import java.sql.SQLSyntaxErrorException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class MariaDBConection extends DBConection{
     
@@ -39,9 +32,7 @@ public class MariaDBConection extends DBConection{
             ntce.printStackTrace();
         } catch (SQLSyntaxErrorException synte) { // No existe la base de datos
             synte.printStackTrace();
-            createDatabase();
-            //JOptionPane.showMessageDialog(null, "Se requiere reiniciar el programa", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
-            //System.exit(0);
+            if (createDatabase())return getConnection();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

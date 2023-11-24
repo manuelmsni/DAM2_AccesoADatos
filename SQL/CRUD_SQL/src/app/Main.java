@@ -16,7 +16,7 @@ import app.utils.DatabaseSelector;
 import app.utils.PropertyManager;
 import app.views.DataViewer;
 import java.util.List;
-import javax.swing.JOptionPane;
+
 /**
  *
  * @author Vespertino

@@ -8,23 +8,20 @@ package app.connection;
  *
  * @author Vespertino
  */
-import app.Main;
 import static app.connection.MariaDBConection.con;
 import static app.connection.MariaDBConection.dbLocation;
 import static app.connection.MariaDBConection.dbName;
-import static app.connection.MariaDBConection.prefix;
-import app.models.Event;
-import app.models.User;
-import app.utils.PropertyManager;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JFileChooser;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.sql.ResultSet;
-import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SQLiteDBConection extends DBConection{
     
@@ -50,10 +47,36 @@ public class SQLiteDBConection extends DBConection{
         return null;
     }
 
-    private boolean checkDatabaseExists(){
+    private boolean checkDatabaseExists() {
         File dbFile = new File(dbLocation + File.separator + dbName);
-        if (dbFile.exists()) return true;
+
+        if (dbFile.exists()) {
+            try (FileInputStream fis = new FileInputStream(dbFile)) {
+                byte[] headerBytes = new byte[16];
+                int bytesRead = fis.read(headerBytes);
+
+                if (bytesRead == 16) {
+                    String fileHex = bytesToHex(headerBytes);
+                    return fileHex.equalsIgnoreCase("53514C69746520666F726D6174203300");
+                }
+
+                return false;
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+
         return false;
+    }
+
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder result = new StringBuilder();
+        for (byte b : bytes) {
+            result.append(String.format("%02X", b));
+        }
+        return result.toString();
     }
     
     private boolean setNewDatabaseLocation(){
